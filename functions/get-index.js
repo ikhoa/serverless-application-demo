@@ -5,7 +5,7 @@ let html
 function loadHtml () {
   if (!html) {
     console.log('loading index.html....')
-    html = fs.readFileSync('static/index.html', 'utf-8')
+    html = fs.readFileSync('./static/index.html', 'utf-8')
     console.log('loaded')
   }
   return html
@@ -13,7 +13,8 @@ function loadHtml () {
 
 module.exports.handler = async (event, context) => {
   const html = loadHtml()
-  const response = {
+  let response;
+  return response = {
     statusCode: 200,
     headers: {
       'Content-Type': 'text/html; charset=UTF-8'
