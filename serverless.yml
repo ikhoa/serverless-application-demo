@@ -12,6 +12,9 @@ provider:
         Fn::GetAtt:
           - restaurantsTable
           - Arn
+    - Effect: Allow
+      Action: execute-api:invoke
+      Resource: arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/*/GET/restaurants
 plugins:
   - serverless-pseudo-parameters
 functions:
@@ -34,6 +37,7 @@ functions:
       - http:
           path: /restaurants/
           method: get
+          authorizer: aws_iam
     environment:
       restaurants_table: restaurants
 resources:
