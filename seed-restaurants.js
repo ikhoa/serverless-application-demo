@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk')
-AWS.config.region = 'us-east-1'
+AWS.config.region = 'eu-west-1'
 const dynamodb = new AWS.DynamoDB.DocumentClient()
 //Restaurant data
 let restaurants = [
@@ -57,4 +57,5 @@ let req = {
   }
 }
 // Write the items as a batch to dynamoDN
-dynamodb.batchWrite(req).promise().then(() => console.log("all done"))
+dynamodb.batchWrite(req).promise()
+  .then(() => console.log("all done")).catch(e=> console.log(e))

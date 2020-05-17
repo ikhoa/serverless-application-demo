@@ -6,6 +6,10 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient()
  * @type {string | number}
  */
 const defaultResults = process.env.defaultResults|| 8
+/**
+ * DynamoDb table name
+ * @type {string}
+ */
 const tableName = process.env.restaurants_table
 
 const getRestaurants = async (count) => {
@@ -17,7 +21,7 @@ const getRestaurants = async (count) => {
   return resp.Items
 }
 
-module.exports.handler = async (event, context) => {
+module.exports.handler = async () => {
   const restaurants = await getRestaurants(defaultResults)
   return {
     statusCode: 200,
