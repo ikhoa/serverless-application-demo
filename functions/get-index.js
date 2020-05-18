@@ -1,3 +1,4 @@
+// Dependencies
 const fs = require("fs")
 const Mustache = require('mustache')
 const aws4 = require('aws4')
@@ -7,6 +8,10 @@ const URL = require('url')
 const restaurantsApiRoot = process.env.restaurants_api
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+const awsRegion = process.env.AWS_REGION
+const cognitoUserPoolId = process.env.cognito_user_pool_id
+const cognitoClientId = process.env.cognito_client_id
+
 let html
 
 function loadHtml () {
@@ -15,7 +20,6 @@ function loadHtml () {
     html = fs.readFileSync('static/index.html', 'utf-8')
     console.log('loaded')
   }
-
   return html
 }
 
@@ -40,7 +44,13 @@ module.exports.handler = async () => {
   const template = loadHtml()
   const restaurants = await getRestaurants()
   const dayOfWeek = days[new Date().getDay()]
-  const html = Mustache.render(template, { dayOfWeek, restaurants })
+  const html = Mustache.render(template, {
+    awsRegion,
+    cognitoUserPoolId,
+    cognitoClientId,
+    dayOfWeek,
+    restaurants,
+    searchUrl: `${restaurantsApiRoot}/search` })
   return {
     statusCode: 200,
     headers: {
