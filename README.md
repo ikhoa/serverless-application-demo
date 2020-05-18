@@ -1,2 +1,2 @@
-#production-ready-serverless-workshop-demo
+# production-ready-serverless-workshop-demo
 An AWS production ready serverless application
